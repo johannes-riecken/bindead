@@ -19,7 +19,7 @@ public abstract class Effect<A> {
   public static <A> Effect<A> ignoring () {
     return new Effect<A>() {
       @Override
-      public void observe (A _) {
+      public void observe (A unused) {
       }
     };
   }

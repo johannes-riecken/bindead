@@ -270,51 +270,51 @@ public class RvarExtractor {
       variables = new LinkedList<Rvar>();
     }
 
-    @Override public Void visit (Bin expr, Void _) {
-      expr.getLeft().accept(this, _);
-      expr.getRight().accept(this, _);
+    @Override public Void visit (Bin expr, Void unused) {
+      expr.getLeft().accept(this, unused);
+      expr.getRight().accept(this, unused);
       return null;
     }
     
-    @Override public Void visit (LinBin expr, Void _) {
-      expr.getLeft().accept(this, _);
-      expr.getRight().accept(this, _);
+    @Override public Void visit (LinBin expr, Void unused) {
+      expr.getLeft().accept(this, unused);
+      expr.getRight().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (LinScale expr, Void _) {
-      expr.getOpnd().accept(this, _);
+    @Override public Void visit (LinScale expr, Void unused) {
+      expr.getOpnd().accept(this, unused);
       return null;
     }
     
 
-    @Override public Void visit (LinRval expr, Void _) {
-      expr.getRval().accept(this, _);
+    @Override public Void visit (LinRval expr, Void unused) {
+      expr.getRval().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (Cmp expr, Void _) {
-      expr.getLeft().accept(this, _);
-      expr.getRight().accept(this, _);
+    @Override public Void visit (Cmp expr, Void unused) {
+      expr.getLeft().accept(this, unused);
+      expr.getRight().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (SignExtend expr, Void _) {
-      expr.getRhs().accept(this, _);
+    @Override public Void visit (SignExtend expr, Void unused) {
+      expr.getRhs().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (Convert expr, Void _) {
-      expr.getRhs().accept(this, _);
+    @Override public Void visit (Convert expr, Void unused) {
+      expr.getRhs().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (Rvar expr, Void _) {
+    @Override public Void visit (Rvar expr, Void unused) {
       variables.add(expr);
       return null;
     }
 
-    @Override public Void visit (Rlit expr, Void _) {
+    @Override public Void visit (Rlit expr, Void unused) {
       return null;
     }
 
@@ -322,57 +322,57 @@ public class RvarExtractor {
       return null;
     }
 
-    @Override public Void visit (RangeRhs expr, Void _) {
+    @Override public Void visit (RangeRhs expr, Void unused) {
       return null;
     }
 
-    @Override public Void visit (Assign stmt, Void _) {
+    @Override public Void visit (Assign stmt, Void unused) {
       collect(stmt.getLhs());
-      stmt.getRhs().accept(this, _);
+      stmt.getRhs().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (Load stmt, Void _) {
+    @Override public Void visit (Load stmt, Void unused) {
       collect(stmt.getLhs());
-      stmt.getReadAddress().accept(this, _);
+      stmt.getReadAddress().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (Store stmt, Void _) {
-      stmt.getWriteAddress().accept(this, _);
-      stmt.getRhs().accept(this, _);
+    @Override public Void visit (Store stmt, Void unused) {
+      stmt.getWriteAddress().accept(this, unused);
+      stmt.getRhs().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (BranchToNative stmt, Void _) {
-      stmt.getCond().accept(this, _);
-      stmt.getTarget().accept(this, _);
+    @Override public Void visit (BranchToNative stmt, Void unused) {
+      stmt.getCond().accept(this, unused);
+      stmt.getTarget().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (BranchToRReil stmt, Void _) {
+    @Override public Void visit (BranchToRReil stmt, Void unused) {
       return null;
     }
 
-    @Override public Void visit (Branch stmt, Void _) {
-      stmt.getTarget().accept(this, _);
+    @Override public Void visit (Branch stmt, Void unused) {
+      stmt.getTarget().accept(this, unused);
       return null;
     }
 
-    @Override public Void visit (Nop stmt, Void _) {
+    @Override public Void visit (Nop stmt, Void unused) {
       return null;
     }
 
-    @Override public Void visit (Assertion stmt, Void _) {
+    @Override public Void visit (Assertion stmt, Void unused) {
       if (stmt instanceof AssertionCompare) {
         AssertionCompare assertion = (AssertionCompare) stmt;
-        assertion.getLhs().accept(this, _);
-        assertion.getRhs().accept(this, _);
+        assertion.getLhs().accept(this, unused);
+        assertion.getRhs().accept(this, unused);
       }
       return null;
     }
 
-    @Override public Void visit (PrimOp stmt, Void _) {
+    @Override public Void visit (PrimOp stmt, Void unused) {
       for (Lhs lhs : stmt.getOutArgs()) {
         collect(lhs);
       }
@@ -384,7 +384,7 @@ public class RvarExtractor {
       return null;
     }
 
-    @Override public Void visit (Native stmt, Void _) {
+    @Override public Void visit (Native stmt, Void unused) {
       return null;
     }
 

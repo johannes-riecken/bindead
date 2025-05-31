@@ -117,7 +117,7 @@ public abstract class IntTrie<A> {
     }
 
     @Override
-    protected IntTrie<A> insert (Fn2<P2<Integer, A>, P2<Integer, A>, A> _, int key, A value) {
+    protected IntTrie<A> insert (Fn2<P2<Integer, A>, P2<Integer, A>, A> unused, int key, A value) {
       return new Leaf<A>(key, value);
     }
 

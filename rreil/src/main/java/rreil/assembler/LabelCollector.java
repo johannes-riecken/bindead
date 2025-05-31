@@ -15,25 +15,25 @@ public class LabelCollector extends ParseTreeVisitorSkeleton {
   private final Map<String, RReilAddr> labels = new HashMap<String, RReilAddr>();
   private RReilAddr currentInstructionOffset = RReilAddr.ZERO;
 
-  @Override public Object visit (ASTModule node, Object _) throws ParseException {
-    return node.childrenAccept(this, _);
+  @Override public Object visit (ASTModule node, Object unused) throws ParseException {
+    return node.childrenAccept(this, unused);
   }
 
-  @Override public Object visit (ASTStmt node, Object _) throws ParseException {
-    return node.childrenAccept(this, _);
+  @Override public Object visit (ASTStmt node, Object unused) throws ParseException {
+    return node.childrenAccept(this, unused);
   }
 
   @Override public Object visit (ASTNatDef node, Object data) throws ParseException {
     return node.childrenAccept(this, data);
   }
 
-  @Override public Object visit (ASTInsn insn, Object _) {
+  @Override public Object visit (ASTInsn insn, Object unused) {
     insn.jjtSetValue(currentInstructionOffset);
     currentInstructionOffset = currentInstructionOffset.nextBase();
     return null;
   }
 
-  @Override public Object visit (ASTLabel label, Object _) {
+  @Override public Object visit (ASTLabel label, Object unused) {
     String name = (String) label.jjtGetValue();
     registerLabel(name);
     return null;

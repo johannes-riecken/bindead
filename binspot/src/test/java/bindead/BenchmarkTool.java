@@ -149,7 +149,7 @@ public class BenchmarkTool {
   // uses older functional benchmark code.
   private P2<Long, Long> getTimeOld () {
     javalx.benchmark.Benchmark<Void> benchmark = new javalx.benchmark.Benchmark<Void>(new Effect<Void>() {
-      @Override public void observe (Void _) {
+      @Override public void observe (Void unused) {
         action.run();
       }
     });
