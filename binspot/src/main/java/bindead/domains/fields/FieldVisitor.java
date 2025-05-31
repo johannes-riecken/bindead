@@ -29,17 +29,17 @@ class FieldVisitor<D extends FiniteDomain<D>> implements RhsVisitor<Finite.Rhs, 
     this.builder = builder;
   }
 
-  @Override public Finite.Rhs visit (Bin expr, Void _) {
-    Finite.Rhs l = expr.getLeft().accept(this, _);
-    Finite.Rhs r = expr.getRight().accept(this, _);
+  @Override public Finite.Rhs visit (Bin expr, Void unused) {
+    Finite.Rhs l = expr.getLeft().accept(this, unused);
+    Finite.Rhs r = expr.getRight().accept(this, unused);
     if (l instanceof Finite.Rlin && r instanceof Finite.Rlin)
       return fin.binary((Finite.Rlin) l, expr.getOp(), (Finite.Rlin) r);
     return null;
   }
 
-  @Override public Rhs visit (LinBin expr, Void _) {
-    Finite.Rhs l = expr.getLeft().accept(this, _);
-    Finite.Rhs r = expr.getRight().accept(this, _);
+  @Override public Rhs visit (LinBin expr, Void unused) {
+    Finite.Rhs l = expr.getLeft().accept(this, unused);
+    Finite.Rhs r = expr.getRight().accept(this, unused);
     if (l instanceof Finite.Rlin && r instanceof Finite.Rlin) {
       Finite.Rlin llin = (Finite.Rlin) l;
       Finite.Rlin rlin = (Finite.Rlin) r;
@@ -55,48 +55,48 @@ class FieldVisitor<D extends FiniteDomain<D>> implements RhsVisitor<Finite.Rhs, 
     return null;
   }
 
-  @Override public Rhs visit (LinScale expr, Void _) {
-    Finite.Rhs opnd = expr.getOpnd().accept(this, _);
+  @Override public Rhs visit (LinScale expr, Void unused) {
+    Finite.Rhs opnd = expr.getOpnd().accept(this, unused);
     if (opnd instanceof Finite.Rlin)
       return ((Finite.Rlin) opnd).smul(expr.getConst());
     return null;
   }
 
-  @Override public Rhs visit (LinRval expr, Void _) {
-    Finite.Rhs opnd = expr.getRval().accept(this, _);
+  @Override public Rhs visit (LinRval expr, Void unused) {
+    Finite.Rhs opnd = expr.getRval().accept(this, unused);
     return opnd;
   }
 
 
-  @Override public Finite.Rhs visit (Cmp expr, Void _) {
-    Finite.Rhs l = expr.getLeft().accept(this, _);
-    Finite.Rhs r = expr.getRight().accept(this, _);
+  @Override public Finite.Rhs visit (Cmp expr, Void unused) {
+    Finite.Rhs l = expr.getLeft().accept(this, unused);
+    Finite.Rhs r = expr.getRight().accept(this, unused);
     if (l instanceof Finite.Rlin && r instanceof Finite.Rlin)
       return fin.comparison((Finite.Rlin) l, expr.getOp(), (Finite.Rlin) r);
     return null;
   }
 
-  @Override public Finite.Rhs visit (SignExtend expr, Void _) {
-    return fin.signExtend((Finite.Rlin) expr.getRhs().accept(this, _));
+  @Override public Finite.Rhs visit (SignExtend expr, Void unused) {
+    return fin.signExtend((Finite.Rlin) expr.getRhs().accept(this, unused));
   }
 
-  @Override public Finite.Rhs visit (Convert expr, Void _) {
-    return fin.convert((Finite.Rlin) expr.getRhs().accept(this, _));
+  @Override public Finite.Rhs visit (Convert expr, Void unused) {
+    return fin.convert((Finite.Rlin) expr.getRhs().accept(this, unused));
   }
 
-  @Override public Finite.Rlin visit (Rvar variable, Void _) {
+  @Override public Finite.Rlin visit (Rvar variable, Void unused) {
     return builder.resolve(variable);
   }
 
-  @Override public Finite.Rlin visit (Rlit literal, Void _) {
+  @Override public Finite.Rlin visit (Rlit literal, Void unused) {
     return fin.literal(literal.getSize(), literal.getValue());
   }
 
-  @Override public Rhs visit (Address expr, Void _) {
+  @Override public Rhs visit (Address expr, Void unused) {
     throw new RReilGrammarException("RReil jump target addresses should not appear on this level anymore.");
   }
 
-  @Override public Finite.Rhs visit (RangeRhs range, Void _) {
+  @Override public Finite.Rhs visit (RangeRhs range, Void unused) {
     return fin.range(range.getSize(), range.getRange());
   }
 }
